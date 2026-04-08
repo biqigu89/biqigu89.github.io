@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>济公文化</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f0e6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .header img {
+            width: 150px;
+            height: auto;
+            margin-right: 30px;
+        }
+        
+        .header h1 {
+            color: #000000;
+            font-size: 3em;
+            margin: 0;
+            font-weight: bold;
+        }
+        
+        .icon-container {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            max-width: 1000px;
+            margin: 0 auto 50px;
+            flex-wrap: wrap;
+        }
+        
+        .icon-item {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+        
+        .icon-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .icon-item img {
+            width: 200px;
+            height: auto;
+            border: 2px solid #8B0000;
+            border-radius: 10px;
+        }
+        
+        .icon-item p {
+            margin-top: 15px;
+            color: #8B0000;
+            font-weight: bold;
+            font-size: 1.4em;
+        }
+        
+        .footer {
+            text-align: center;
+            font-size: 1.4em;
+            color: #000000;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="images/表情包-靠谱2.png" alt="济公">
+        <h1>来天台，追更济公传</h1>
+    </div>
+    
+    <div class="icon-container">
+        <div class="icon-item" id="childhood">
+            <img src="images/童年.png" alt="降世·凡心">
+            <p>降世·凡心</p>
+        </div>
+        <div class="icon-item" id="guoqing">
+            <img src="images/修行.png" alt="皈依·佛门">
+            <p>皈依·佛门</p>
+        </div>
+        <div class="icon-item">
+            <img src="images/悟道.png" alt="悟道·成真">
+            <p>悟道·成真</p>
+        </div>
+        <div class="icon-item">
+            <img src="images/济世.png" alt="显化·人间">
+            <p>显化·人间</p>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>从奶娃娃到活佛，一键解锁济公的满级人生！</p>
+    </div>
+    
+    <script>
+        // 为降世·凡心图标添加点击事件，跳转到济公故居地图页
+        document.getElementById('childhood').addEventListener('click', function() {
+            window.location.href = 'jigong.html';
+        });
+        
+        // 为皈依·佛门图标添加点击事件，跳转到国清寺地图页
+        document.getElementById('guoqing').addEventListener('click', function() {
+            window.location.href = 'guoqing.html';
+        });
+    </script>
+</body>
+</html>

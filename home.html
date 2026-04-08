@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>济公文化</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f0e6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        h1 {
+            color: #8B0000;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+        
+        .icon-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .icon-item {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .icon-item:hover {
+            transform: scale(1.05);
+        }
+        
+        .icon-item img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>济公文化</h1>
+    <div class="icon-container">
+        <div class="icon-item" id="childhood">
+            <img src="images/童年.png" alt="童年">
+        </div>
+        <div class="icon-item" id="guoqing">
+            <img src="images/修行.png" alt="佛门降世">
+        </div>
+        <div class="icon-item">
+            <img src="images/悟道.png" alt="悟道">
+        </div>
+        <div class="icon-item">
+            <img src="images/济世.png" alt="济世">
+        </div>
+    </div>
+    
+    <script>
+        // 为童年图标添加点击事件，跳转到济公故居地图页
+        document.getElementById('childhood').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+        
+        // 为佛门降世图标添加点击事件，跳转到国清寺地图页
+        document.getElementById('guoqing').addEventListener('click', function() {
+            window.location.href = 'guoqing.html';
+        });
+    </script>
+</body>
+</html>

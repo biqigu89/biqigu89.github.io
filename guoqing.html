@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>国清寺地图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f0e6;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 2px solid #8B0000;
+            position: relative;
+        }
+        
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #8B0000;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .back-button:hover {
+            background-color: #A52A2A;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        h1 {
+            color: #8B0000;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+        
+        main {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .map-container {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .map-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .hotspots {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .hotspot {
+            position: absolute;
+            width: 36px;
+            height: 36px;
+            background-color: #8B0000;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+            pointer-events: auto;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 2px solid white;
+            transition: all 0.3s ease;
+        }
+        
+        .hotspot:hover {
+            transform: scale(1.1);
+            background-color: #A52A2A;
+            border-color: #FFD700;
+        }
+        
+        .hotspot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(139, 0, 0, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .info-panel {
+            flex: 1;
+            min-width: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .info-panel h2 {
+            color: #8B0000;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        
+        .info-panel p {
+            margin-bottom: 15px;
+        }
+        
+        .info-panel ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        .info-panel li {
+            margin-bottom: 10px;
+            position: relative;
+        }
+        
+        .info-panel li::before {
+            content: '•';
+            color: #8B0000;
+            font-weight: bold;
+            position: absolute;
+            left: -20px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            border-top: 2px solid #8B0000;
+            color: #666;
+        }
+        
+        .tooltip {
+            position: absolute;
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 14px;
+            z-index: 1000;
+            pointer-events: none;
+            max-width: 200px;
+        }
+        
+        @media (max-width: 768px) {
+            main {
+                flex-direction: column;
+            }
+            
+            .map-container,
+            .info-panel {
+                flex: none;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <a href="index.html" class="back-button">返回首页</a>
+            <h1>国清寺地图</h1>
+            <p>点击地图上的图标，了解国清寺的著名建筑</p>
+        </header>
+        
+        <main>
+            <div class="map-container">
+                <img src="images/guoqing.png" alt="国清寺地图" class="map-image">
+                <div class="hotspots">
+                    <div class="hotspot" data-id="1" style="top: 15%; left: 50%;">1</div>
+                    <div class="hotspot" data-id="2" style="top: 25%; left: 85%;">2</div>
+                    <div class="hotspot" data-id="3" style="top: 35%; left: 70%;">3</div>
+                    <div class="hotspot" data-id="8" style="top: 35%; left: 35%;">8</div>
+                    <div class="hotspot" data-id="4" style="top: 55%; left: 55%;">4</div>
+                    <div class="hotspot" data-id="5" style="top: 55%; left: 10%;">5</div>
+                    <div class="hotspot" data-id="9" style="top: 60%; left: 80%;">9</div>
+                    <div class="hotspot" data-id="6" style="top: 60%; left: 30%;">6</div>
+                    <div class="hotspot" data-id="7" style="top: 85%; left: 50%;">7</div>
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h2 id="info-title">国清寺地图</h2>
+                <div id="info-content">
+                    <p>欢迎来到国清寺地图，点击地图上的红色图标跳转到相应景点的详细介绍页面，了解更多关于这些著名建筑的故事。</p>
+                    <p>地图上的景点包括：</p>
+                    <ul>
+                        <li>1. 大雄宝殿</li>
+                        <li>2. 隋塔</li>
+                        <li>3. 观音殿</li>
+                        <li>4. 雨花殿</li>
+                        <li>5. 隋梅</li>
+                        <li>6. 梅亭</li>
+                        <li>7. 隋代石刹</li>
+                        <li>8. 青铜炉</li>
+                        <li>9. 鱼乐园</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+        
+        <footer>
+            <p>&copy; 2026 国清寺地图</p>
+        </footer>
+    </div>
+    
+    <script>
+        // 国清寺景点的内容数据
+        const locations = [
+            {
+                id: 1,
+                name: "大雄宝殿",
+                description: "大雄宝殿是国清寺的主殿，供奉着释迦牟尼佛。殿内雕梁画栋，气势恢宏，是国清寺最具代表性的建筑之一。",
+                story: "大雄宝殿始建于隋朝，历经多次修缮，至今仍保持着唐代的建筑风格。殿内的释迦牟尼佛像高达数米，庄严肃穆，吸引了无数信徒前来朝拜。"
+            },
+            {
+                id: 2,
+                name: "隋塔",
+                description: "隋塔是国清寺的标志性建筑之一，建于隋朝，是浙江省现存最古老的佛塔之一。",
+                story: "隋塔高约59.4米，六面九级，塔内供奉着大量佛像。据传说，隋文帝为了纪念智者大师，特意建造了这座佛塔。"
+            },
+            {
+                id: 3,
+                name: "观音殿",
+                description: "观音殿是国清寺的重要殿堂之一，殿内供奉着观音菩萨。",
+                story: "观音殿建于明代，殿内的观音菩萨像栩栩如生，慈悲端庄。每年农历二月十九观音诞辰，这里都会举行盛大的法会。"
+            },
+            {
+                id: 4,
+                name: "雨花殿",
+                description: "雨花殿是国清寺的重要殿堂之一，殿内供奉着四大天王。",
+                story: "雨花殿得名于传说中智者大师讲经时，天上落下如雨般的花瓣。殿内的四大天王像威风凛凛，守护着寺院的平安。"
+            },
+            {
+                id: 5,
+                name: "隋梅",
+                description: "隋梅是国清寺内的一棵古老的梅花树，已有1400多年的历史。",
+                story: "隋梅是国清寺的重要文物之一，据说是隋朝时期种植的，至今仍枝繁叶茂，每年冬季都会盛开梅花，香气四溢。"
+            },
+            {
+                id: 6,
+                name: "梅亭",
+                description: "梅亭是国清寺内的一处凉亭，环境清幽，是游客休息的好去处。",
+                story: "梅亭建于清代，周围种满了梅花，每到冬季，梅花盛开，香气四溢。亭内有石桌石凳，可供游客休息。"
+            },
+            {
+                id: 7,
+                name: "隋代石刹",
+                description: "隋代石刹是国清寺的重要文物，建于隋朝，是研究古代建筑艺术的重要资料。",
+                story: "隋代石刹造型精美，雕刻细腻，是隋朝建筑艺术的杰出代表。石刹上的图案和文字，为研究隋朝的历史和文化提供了重要线索。"
+            },
+            {
+                id: 8,
+                name: "青铜炉",
+                description: "青铜炉是国清寺内的重要文物，用于宗教仪式。",
+                story: "青铜炉铸造于明代，造型精美，工艺精湛。每年的重要宗教仪式中，僧人们都会在青铜炉前诵经祈福，香火不断。"
+            },
+            {
+                id: 9,
+                name: "鱼乐园",
+                description: "鱼乐园是国清寺内的一处水池，里面养着许多金鱼。",
+                story: "鱼乐园是国清寺的一处景点，水池中养着许多金鱼，游客可以在此喂鱼，感受与自然的亲近。水池周围环境优美，是游客休息的好去处。"
+            }
+        ];
+        
+        // 获取所有热点元素
+        const hotspots = document.querySelectorAll('.hotspot');
+        
+        // 为每个热点添加点击事件
+        hotspots.forEach(hotspot => {
+            hotspot.addEventListener('click', function() {
+                const id = parseInt(this.getAttribute('data-id'));
+                const location = locations.find(loc => loc.id === id);
+                
+                if (location) {
+                    // 跳转到详细页面
+                    window.location.href = `guoqing${id}.html`;
+                }
+            });
+        });
+        
+        // 为热点添加鼠标悬停效果（显示浮窗）
+        hotspots.forEach(hotspot => {
+            hotspot.addEventListener('mouseenter', function(e) {
+                const id = parseInt(this.getAttribute('data-id'));
+                const location = locations.find(loc => loc.id === id);
+                
+                if (location) {
+                    // 创建浮窗元素
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'tooltip';
+                    tooltip.textContent = location.name;
+                    tooltip.style.left = `${e.pageX + 10}px`;
+                    tooltip.style.top = `${e.pageY - 30}px`;
+                    tooltip.id = 'tooltip';
+                    
+                    // 添加到页面
+                    document.body.appendChild(tooltip);
+                }
+            });
+            
+            hotspot.addEventListener('mousemove', function(e) {
+                const tooltip = document.getElementById('tooltip');
+                if (tooltip) {
+                    tooltip.style.left = `${e.pageX + 10}px`;
+                    tooltip.style.top = `${e.pageY - 30}px`;
+                }
+            });
+            
+            hotspot.addEventListener('mouseleave', function() {
+                const tooltip = document.getElementById('tooltip');
+                if (tooltip) {
+                    document.body.removeChild(tooltip);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
